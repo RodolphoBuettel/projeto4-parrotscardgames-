@@ -27,9 +27,15 @@ while(numeroDecartas < 4 || numeroDecartas > 14 || numeroDecartas % 2 !== 0){
     indice = 0;
     const baralho = document.querySelector('.baralho');
     while(numeroDecartas > contador){
-        baralho.innerHTML = baralho.innerHTML + `<div class = "carta${contador}">
-        <img src="./imagens/front.png"/><div class = "imagem-fundo">${array[indice]}</div></div>`;
+        baralho.innerHTML = baralho.innerHTML + `<div class = "cartas" onclick = "virarCarta(this)">
+        <div class = "carta${contador}"><img src="./imagens/front.png"/></div>
+        <div class = "imagem-fundo esconder">${array[indice]}</div></div>`;
         
         indice++; 
         contador++;
     }
+    function virarCarta(carta){
+        console.log(carta);
+        const transicao = carta.querySelector('.imagem-fundo');
+        transicao.classList.remove('esconder');
+    }   
