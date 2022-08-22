@@ -39,17 +39,15 @@ while(numeroDecartas > contador){
 }
 
 const cartas = document.querySelectorAll('.cartas');
-//cartas.setAttribute('data-caracter', `${array[indice]}`);
 
 let cartaVirada = false;
 let carta1 = "";
 let carta2 = "";
-
+let jogadas = 0;
   function flipCard() {
     if (this === cartaVirada) return;
 
-    //if(this.className.includes('virada')){
-       // return;
+   
     
     if(carta1 === ""){
         this.classList.add('virada');
@@ -58,77 +56,39 @@ let carta2 = "";
         this.classList.add('virada');
         carta2 = this;
         
-        verificaCarta();
     }
+    jogadas++;
+    verificaCarta();
 }
 function verificaCarta(){
-    console.log(carta1);
-    console.log(carta2);
     const primeiraCarta = carta1.getAttribute('data-character');
+    console.log(primeiraCarta);
     const segundaCarta = carta2.getAttribute('data-character');
-
+    console.log(segundaCarta);
     if(primeiraCarta === segundaCarta){
-        
+        carta1 = '';
+        carta2 = '';
+        setTimeout(()=>{
+
+            checkEndGame();
+        }, 200);
     }else{
-        primeiraCarta.classList.remove('virada1');
-        segundaCarta.classList.remove('virada');
-    }
+        setTimeout(() => {
+            carta1.classList.remove('virada');
+            carta2.classList.remove('virada');
+            carta1 = '';
+            carta2 = '';
+          }, 1000);
 }
-
-
-
-
-
-
-    //if (!cartaVirada) {
-      //cartaVirada = true;
-      //primeiraCarta = this;
-      //return;
-   // }
-
-    //secondCard = this;
-    //lockBoard = true;
-
-    //checkForMatch();
-
- // function checkForMatch() {
-    //let isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
-   // isMatch ? disableCards() : unflipCards();
- // }
-
-  //function disableCards() {
-   // firstCard.removeEventListener('click', flipCard);
-    //secondCard.removeEventListener('click', flipCard);
-
-   // resetBoard();
- // }
-
- // function unflipCards() {
-    //setTimeout(() => {
-    //  firstCard.classList.remove('virada');
-     // secondCard.classList.remove('virada');
-
-      //resetBoard();
-   // }, 1500);
-  //}
-
-  ///function resetBoard() {
-   // [hasFlippedCard, lockBoard] = [false, false];
-   // [firstCard, secondCard] = [null, null];
- // }
-
-
+}
 cartas.forEach(cartas => cartas.addEventListener('click', flipCard));
 console.log(cartas);
-//function virarCarta(carta){
-    //const transicao = carta.querySelector('.back-face');
-    //transicao.classList.remove('esconder');
-    //const virou = carta;
-    //virou.classList.add('virada');
-    //if('.back-face'.innerHTML !== '.back-face'.innerHTML ){
-        //transicao.classList.add('esconder');
-        //console.log(transicao);
-        //virou.classList.remove('virada');
-        //console.log(virou);
-    //}
-//}
+
+ function checkEndGame(){
+    const desabilita = document.querySelectorAll('.virada');
+    
+    if(desabilita.length === numeroDecartas){
+
+        alert(`Você ganhou em ${jogadas} jogadas!`);
+    }
+}
